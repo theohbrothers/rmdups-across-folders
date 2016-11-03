@@ -20,7 +20,7 @@ A simple Powershell script that can be used to list / remove duplicate files dis
 ## Installation/usage:
 - Open the <code>rmdups-across-folders.ps1</code> in your favourite text editor and configure the script settings at the top of the script (instructions are included).
 - Right click on the script in explorer and select <code>Run with Powershell</code>. (should be present on Windows 7 and up)
-- Alternatively, open command prompt, and run <code>Powershell .\rmdups.ps1</code>
+- Alternatively, open command prompt, and run <code>Powershell .\rmdups-across-folders.ps1</code>
 
 ## NOTE:
 - By default, script directory (where you run the script) needs <b>write permission</b> for session logging (output.txt). If you prefer not to, turn off session logging in script configuration.
