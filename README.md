@@ -18,7 +18,7 @@ A simple Powershell script that can be used to list / remove duplicate files dis
 - User with read/write/modify permissions on script and searched directories.
 
 ## Installation/usage:
-- Open the <code>rmdups.ps1</code> in your favourite text editor and configure the script settings at the top of the script (instructions are included).
+- Open the <code>rmdups-across-folders.ps1</code> in your favourite text editor and configure the script settings at the top of the script (instructions are included).
 - Right click on the script in explorer and select <code>Run with Powershell</code>. (should be present on Windows 7 and up)
 - Alternatively, open command prompt, and run <code>Powershell .\rmdups.ps1</code>
 
@@ -38,5 +38,5 @@ What is the <b>original file</b>?:
 ## Background:
 - Most people create duplicate files in various folders either <i>accidentally</i>, or <i>inexperiencedly</i>, or <i>obliviously</i>
 	- Obliviously: For instance, you accidentally but so quickly drag and drop a folder or files to another folder that you didn't even realize
-  - Inexperiencedly: You use scripts that accidentally create duplicate files e.g. <code>cp, copy</code> commands
-  - Accidentally: Using CTRL+C & CTRL+V too quickly can lead to duplicate file creation if CTRL-Z is not used immediately after
+	- Inexperiencedly: You use scripts that accidentally create duplicate files e.g. <code>cp, copy</code> commands
+	- Accidentally: Using CTRL+C & CTRL+V too quickly can lead to duplicate file creation if CTRL-Z is not used immediately after
