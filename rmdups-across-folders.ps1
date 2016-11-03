@@ -81,8 +81,7 @@ foreach($f in $files) {
 }
 if($debug){$str = $files_hashes | Out-String ; Write-Host $str}
 
-$j=0 # total dup count within this directory
-$cd = $_.FullName # current directory's full path
+$j=0 # total dup count 
 $cd_filesmapping = @{};  # declare/reset the current directory's dup store
 
 # for each file, do
@@ -169,7 +168,7 @@ if($mode -eq 0) {
 	$cd_filesmapping.GetEnumerator() | % {
 		if($_.key.ToString() -ne $_.value.ToString()) { # exclude the original which has key==value
 			$j++
-			if ($j -eq 1) { Write-Host "`n[Mode: $mode - Listing duplicate files, and their original file] `n`tFolder: $cd" -ForegroundColor Cyan }
+			if ($j -eq 1) { Write-Host "`n[Mode: $mode - Listing duplicate files, and their original file]" -ForegroundColor Cyan }
 			if ($j -eq 1) { Write-Host "`tdup file`t`t`t`t`toriginal file`n`t----------`t`t`t`t`t--------------" }
 			$f = $_.key
 			$v = $_.value
