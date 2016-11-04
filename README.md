@@ -27,13 +27,16 @@ A simple Powershell script that can be used to list / remove duplicate files dis
 - If using mode 1 or 2, ensure directories searched have <b>read,write,execute,modify permissions</b>.
 
 ## FAQ
-What is a <b>duplicate file</b>?:
+Q: What is a <b>duplicate file</b>?:
 - Has separate file[s] with:
 	- Same file contents (file hash)
 	- Same file size
 	
-What is the <b>original file</b>?:
+Q: What is the <b>original file</b>?:
 - A duplicate file but with the shortest name among all duplicates found.
+
+Q: Help! I am getting an error <code>'File C:\Users\User\rmdups\rmdups.ps1 cannot be loaded because the execution of scripts is disabled on this system. Please see "get-help about_signing" for more details.'</code>
+- You need to allow the execution of unverified scripts. Open Powershell as administrator, type <code>Set-ExecutionPolicy Unrestricted -Force</code> and press ENTER. Try running the script again. You can easily restore the security setting back by using <code>Set-ExecutionPolicy Undefined -Force</code>
 
 ## Background:
 - Most people create duplicate files in various folders either <i>accidentally</i>, or <i>inexperiencedly</i>, or <i>obliviously</i>
