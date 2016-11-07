@@ -10,7 +10,8 @@ A simple Powershell script that can be used to list / remove duplicate files dis
 - Choose a mode for one of the following:
 	- list duplicates 
 	- delete duplicates to the recycle bin, leaving the original file intact (shortest named file)
-- Logs the entire search session (output.txt) to the script's directory for you to review any duplicates. 
+- Outputs all duplicates to a csv file (duplicates.csv) for your review.
+- Logs the entire console session (output.txt) to the script's directory for you to review any duplicates. 
 
 ## Requirements:
 - Powershell v4
@@ -20,7 +21,7 @@ A simple Powershell script that can be used to list / remove duplicate files dis
 ## Installation/usage:
 - Open the <code>rmdups-across-folders.ps1</code> in your favourite text editor and configure the script settings at the top of the script (instructions are included).
 - Right click on the script in explorer and select <code>Run with Powershell</code>. (should be present on Windows 7 and up)
-- Alternatively, open command prompt, and run <code>Powershell .\rmdups-across-folders.ps1</code>
+- Alternatively, open command prompt in the script directory, and run <code>Powershell .\rmdups.ps1</code>
 
 ## NOTE:
 - By default, script directory (where you run the script) needs <b>write permission</b> for session logging (output.txt). If you prefer not to, turn off session logging in script configuration.
@@ -40,6 +41,6 @@ Q: Help! I am getting an error <code>'File C:\Users\User\rmdups\rmdups.ps1 canno
 
 ## Background:
 - Most people create duplicate files in various folders either <i>accidentally</i>, or <i>inexperiencedly</i>, or <i>obliviously</i>
-	- Obliviously: For instance, you accidentally but so quickly drag and drop a folder or files to another folder that you didn't even realize
-	- Inexperiencedly: You use scripts that accidentally create duplicate files e.g. <code>cp, copy</code> commands
-	- Accidentally: Using CTRL+C & CTRL+V too quickly can lead to duplicate file creation if CTRL-Z is not used immediately after
+	- Obliviously: For instance, you accidentally but so quickly drag and drop a folder or files to another folder that you didn't even realize.
+	- Inexperiencedly: You use scripts that accidentally create duplicate files e.g. <code>cp, copy</code> commands.
+	- Accidentally: Using CTRL+C & CTRL+V too quickly can lead to duplicate file creation if CTRL-Z is not used immediately after.
