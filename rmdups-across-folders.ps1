@@ -5,14 +5,8 @@ $startingdir = "D:\duplicatesfolder"
 # mode: action to take for duplicates found
 # 0 - list duplicates only. will not move or delete duplicates.
 # 1 - delete files to recycle bin.
-# 2 - move duped files to $dupdir that will be created.  
 # Default: 0
-$mode = 0
-
-# The name of the directory name where duplicates will be moved. Cannot contain the following characters:/ \ : * ? < > |
-# NOTE: Applies only to mode 2. Edit between the quotes
-# Default: "!dup"
-$dupdir = "!dup" 
+$mode = 1
 
 # output mode: console session
 # 0 - do not log the console output to file.
@@ -146,7 +140,7 @@ $filesmapping = [ordered]@{}  # all files' mapping. duplicate file will point to
 		if($debug){Write-Host " - f.BaseName:" $f.BaseName "`t _BaseName" $_.BaseName}
 		if($debug){Write-Host " - f md5:" $f_md5 "`t _md5:" $_md5}
 
-		# a dup is: same file contents (hash), same size, within the same container folder.
+		# a dup is: same file contents (hash), same size.
 		if(($_.Length -eq $f.Length) -and ($f_md5 -eq $_md5)) {
 			# store this first dup in hash
 			if(!$duplicates.Contains($f)) {
@@ -170,7 +164,7 @@ $filesmapping = [ordered]@{}  # all files' mapping. duplicate file will point to
 		if($debug){echo $filesmapping}
 		continue oloop;
 	}
-		
+
 	# - dups found - #
 	# get shortest file name among dups. This will be the main/original file.
 	$len_shortest = $f.Name.Length;
@@ -188,7 +182,7 @@ $filesmapping = [ordered]@{}  # all files' mapping. duplicate file will point to
 	# debug
 	if($debug){Write-Host "----#duplicates(before)-----"}
 	if($debug){echo $duplicates}
-		
+
 	# map all dups to their main/original file with the shortest name
 	foreach($key in $($duplicates.keys)){
 		# set key's value as shortest name
@@ -196,7 +190,7 @@ $filesmapping = [ordered]@{}  # all files' mapping. duplicate file will point to
 		# add new mapping to filesmapping to mark as done
 		$filesmapping.Add($key, $duplicates[$key]) # format: dupObj(key) => oriObj(value)
 	}
-		
+
 	# debug
 	if($debug){Write-Host "----#duplicates(after)-----"}
 	if($debug){echo $duplicates}
@@ -207,7 +201,7 @@ $filesmapping = [ordered]@{}  # all files' mapping. duplicate file will point to
 $j=0 # total dup count within this directory
 if($mode -eq 0) {
 	$filesmapping.GetEnumerator() | % {
-		if($_.key.ToString() -ne $_.value.ToString()) { # exclude the original which has key==value
+		if($_.key.FullName -ne $_.value.FullName) { # exclude the original which has key==value
 			$j++
 			if ($j -eq 1) { Write-Host "`n[Mode: $mode - Listing duplicate files, and their original file]" -ForegroundColor Cyan }
 			if ($j -eq 1) { Write-Host "`tdup file`t`t`t`t`toriginal file`n`t----------`t`t`t`t`t--------------" }
@@ -217,7 +211,7 @@ if($mode -eq 0) {
 }elseif($mode -eq 1) {
 	# delete files to recycle bin
 	$filesmapping.GetEnumerator() | % { 
-		if($_.key.ToString() -ne $_.value.ToString()) { # exclude the original which has key==value
+		if($_.key.FullName -ne $_.value.FullName) { # exclude the original which has key==value
 			$j++
 			if($j -eq 1) { Write-Host "[Mode: $mode - Deleting duplicate files, keeping original file(shortest name among them)] " -ForegroundColor Cyan }
 			if($j -eq 1) { Write-Host "`tdup file`t`t`t`t`toriginal file`n`t----------`t`t`t`t`t--------------" }
@@ -227,7 +221,7 @@ if($mode -eq 0) {
 			$shell = new-object -comobject "Shell.Application"
 			$item = $shell.Namespace(0).ParseName("$path")
 			$item.InvokeVerb("delete")
-			
+
 			Write-Host "`tDeleting:`t" $f.FullName "`t`t`t`t`tOriginal:`t"   $v.FullName
 			# dont use Remove-item, it permanently deletes
 			#Remove-item $falses
@@ -245,7 +239,6 @@ if($j) { Write-Host " ---------- `n| summary | `n ---------- `n - original file 
 
 # output duplicates
 $filesmapping.GetEnumerator() | % {
-	echo $_.key.FullName
 	if($_.key.FullName -ne $_.value.FullName) {
 		$k = $_.key
 		$v = $_.value
@@ -258,7 +251,6 @@ $filesmapping.GetEnumerator() | % {
 		$output += "`"$k_fullpath`",`"$k_size_in_kB`",`"$k_hash`",`"$v_fullpath`",`"$v_size_in_kB`",`"$v_hash`""
 	}
 }
-
 
 # write all duplicates to file
 $output |  Out-File $output_dup_file -Encoding utf8 -Append
